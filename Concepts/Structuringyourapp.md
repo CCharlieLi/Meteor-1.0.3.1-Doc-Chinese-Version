@@ -95,4 +95,10 @@ mobile-config.js          # define icons and metadata for Android/iOS
 
 ###组织你的项目
 
+目前有三种基本方法来根据项目特点和组件结构来组织项目目录。打个比方，现在在我们的项目中有两个类型的对象：'apples'和'oranges'。
 
+#### 方法1：根级文件夹
+
+#### 方法2：'client/'和'server/'中的文件夹
+
+#### 方法3：包
