@@ -99,6 +99,38 @@ mobile-config.js          # define icons and metadata for Android/iOS
 
 #### 方法1：根级文件夹
 
-#### 方法2：'client/'和'server/'中的文件夹
+由于无论'client','server'和'lib'目录在哪个位置，他们都会按照刚才所说的顺序进行加载，那么你就可以使用根文件夹的方式来将代码组织到不同的模块中：
+```
+apples/lib/               # code for apple-related features
+apples/client/
+apples/server/
 
+oranges/lib/              # code for orange-related features
+oranges/client/
+oranges/server/
+```
+
+#### 方法2：`client/`和`server/`中的文件夹
+```
+lib/apples/               # common code for apples
+lib/oranges/              # and oranges
+
+client/apples/            # client code for apples
+client/oranges/           # and oranges
+
+server/apples/            # server code for apples
+server/oranges/           # and oranges
+```
 #### 方法3：包
+
+这是代码分隔，模块化和重用性的终极方式。如果将不同功能的代码放在不同的包中，那么任何一个包中的代码都不能访问其他包中的代码，除非通过导出的方式，这就使得相互之间的依赖更加明确。同时也很好的支持了简单的独立功能测试。此外你也可以发布这个包，然后在其他Meteor应用中通过`meteor add`来使用。
+
+```
+packages/apples/package.js     # files, dependencies, exports for apple feature
+packages/apples/<anything>.js  # file loading is controlled by package.js
+
+packages/oranges/package.js    # files, dependencies, exports for orange feature
+packages/oranges/<anything>.js # file loading is controlled by package.js
+```
+
+
