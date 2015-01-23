@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
-        <title>Glossary | </title>
+        <title>响应 | </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.5.0">
@@ -13,16 +13,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
-        <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
         
         
     
     
     
-    
-
-    
+    <link rel="prev" href="../Concepts/Dataandsecurity.html" />
     
 
         
@@ -30,11 +28,11 @@
     <body>
         
         
-<link rel="stylesheet" href="gitbook/style.css">
+<link rel="stylesheet" href="../gitbook/style.css">
 
 
         
-    <div class="book" data-level="" data-basepath="." data-revision="1421993312937">
+    <div class="book" data-level="1.4" data-basepath=".." data-revision="1421999658240">
     
 
 <div class="book-summary">
@@ -55,7 +53,7 @@
         <li class="chapter " data-level="0" data-path="index.html">
             
                 
-                    <a href="./index.html">
+                    <a href="../index.html">
                         <i class="fa fa-check"></i>
                         
                          Meteor介绍
@@ -70,7 +68,7 @@
         <li class="chapter " data-level="0.1" data-path="Quickstart.html">
             
                 
-                    <a href="./Quickstart.html">
+                    <a href="../Quickstart.html">
                         <i class="fa fa-check"></i>
                         
                             <b>0.1.</b>
@@ -86,7 +84,7 @@
         <li class="chapter " data-level="0.2" data-path="Principles.html">
             
                 
-                    <a href="./Principles.html">
+                    <a href="../Principles.html">
                         <i class="fa fa-check"></i>
                         
                             <b>0.2.</b>
@@ -102,7 +100,7 @@
         <li class="chapter " data-level="0.3" data-path="Resource.html">
             
                 
-                    <a href="./Resource.html">
+                    <a href="../Resource.html">
                         <i class="fa fa-check"></i>
                         
                             <b>0.3.</b>
@@ -120,7 +118,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1" >
+        <li class="chapter " data-level="1" >
             
             <span><b>1.</b> 基本概念</span>
             
@@ -132,7 +130,7 @@
         <li class="chapter " data-level="1.1" data-path="Concepts/WhatisMeteor.html">
             
                 
-                    <a href="./Concepts/WhatisMeteor.html">
+                    <a href="../Concepts/WhatisMeteor.html">
                         <i class="fa fa-check"></i>
                         
                             <b>1.1.</b>
@@ -148,7 +146,7 @@
         <li class="chapter " data-level="1.2" data-path="Concepts/Structuringyourapp.html">
             
                 
-                    <a href="./Concepts/Structuringyourapp.html">
+                    <a href="../Concepts/Structuringyourapp.html">
                         <i class="fa fa-check"></i>
                         
                             <b>1.2.</b>
@@ -164,12 +162,28 @@
         <li class="chapter " data-level="1.3" data-path="Concepts/Dataandsecurity.html">
             
                 
-                    <a href="./Concepts/Dataandsecurity.html">
+                    <a href="../Concepts/Dataandsecurity.html">
                         <i class="fa fa-check"></i>
                         
                             <b>1.3.</b>
                         
                          数据和安全
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter active" data-level="1.4" data-path="Concepts/Reactivity.html">
+            
+                
+                    <a href="../Concepts/Reactivity.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                         响应
                     </a>
                 
             
@@ -262,37 +276,52 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href="./" ></a>
+        <a href="../" ></a>
     </h1>
 </div>
 
             <div class="page-wrapper" tabindex="-1">
                 <div class="page-inner">
                 
+                
+                    <section class="normal" id="section-gitbook_48">
+                    
+                        <h2 id="">响应</h2>
+<p>Meteor很注重<a href="http://en.wikipedia.org/wiki/Reactive_programming" target="_blank">响应式编程</a>的概念，也就是说你只需要关心写代码，当代码中的数据发生变化时，运行结果会自动重新执行。</p>
+<pre><code class="lang-javascript">Tracker.autorun(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+  Meteor.subscribe(<span class="hljs-string">"messages"</span>, Session.get(<span class="hljs-string">"currentRoomId"</span>));
+});
+</code></pre>
+<p>这个例子（取自一个聊天室客户端）建立了一个根据session变量<code>currentRoomId</code>的数据获取方法。无论什么原因，一旦<code>Session.get(&quot;currentRoomId&quot;)</code>的值发生变化，这个函数会自动重新运行，获取新的数据来代替以前的数据。</p>
 
-
+                    
+                    </section>
+                
+                
                 </div>
             </div>
         </div>
 
+        
+        <a href="../Concepts/Dataandsecurity.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 数据和安全"><i class="fa fa-angle-left"></i></a>
         
         
     </div>
 </div>
 
         
-<script src="gitbook/app.js"></script>
+<script src="../gitbook/app.js"></script>
 
     
     <script src="https://cdn.mathjax.org/mathjax/2.4-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
 
     
-    <script src="gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
     
 
     
-    <script src="gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

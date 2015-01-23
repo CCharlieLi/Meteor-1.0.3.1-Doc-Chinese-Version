@@ -60,4 +60,19 @@ Meteor有一个很有意思的地方。当客户端发起一个写操作的请�
 
 把以上内容总结起来，这些技术就实现了延迟补偿。客户端拥有其所需数据的本地缓存，不用等待一次轮回从服务器获得数据。当客户端要修改数据时，这些修改操作不用等待服务器端的验证就能立即在本地执行，直到服务器端最终判断该操作是否被接受。
 
-> 
+> 当前版本的Meteor支持目前最流行的文件数据库MongoDB，当前部分的实例采用了[MongoDB API](http://docs.mongodb.org/manual/contents/)。以后的版本中会支持更多的数据库。
+
+### 认证机制和账户
+
+Meteor包含一个功能全面的认证机制Meteor Account。它运用[bcrypt](http://en.wikipedia.org/wiki/Bcrypt)算法来确保安全地密码登录，同时也集成了很多外部服务接口，包括Facebook，GitHub，Google，Meetup，Twitter和Weibo。Meteor Account定义了一个`Meteor.users`集合用来存放用户数据。
+
+Meteor同时也包含一个预置的表单用来完成一些常见任务如登录，注册，修改密码和密码重置邮件功能。只需要用一行代码将Accounts UI包添加到你的应用中。`accounts-ui`包中甚至还包含了一个配置向导来一步步指引你在当前应用中创建外部登录服务。
+
+### 输入验证
+
+Meteor允许你的方法和公共函数使用任何类型的JSON作为参数。（实际上，Meteor的有线协议支持EJSON格式，EJSON是一种扩展的JSON类型，可以支持一些常见类型如日期和二进制缓冲区。）Javascript动态类型意味着你不用为每个变量都事先声明类型，但是事先声明变量类型的好处在于，可以确保从客户端传到相应方法和公共函数的参数类型和预期的一致。
+
+Meteor提供了一个轻量级的库用来检查参数或其他值的类型是否和预期的一致。只需要在函数开始处添加代码`check(username, String)`或者`check(office, {building: String, room: Number})`。如果参数类型和预期的不符，这里的`check`函数会抛出异常。
+
+Meteor同时也提供了一个更加简单的方法让所有方法和公共函数验证它们的参数类型。只需要运行` meteor add audit-argument-checks`，这样凡是没有对参数类型进行验证的方法和公共函数都会抛出异常。
+
