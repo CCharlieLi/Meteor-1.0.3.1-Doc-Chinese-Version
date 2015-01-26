@@ -1,4 +1,4 @@
-响应
+响应式
 -------------------------
 
 Meteor很注重[响应式编程](http://en.wikipedia.org/wiki/Reactive_programming)的概念，也就是说你只需要关心写代码，当代码中的数据发生变化时，运行结果会自动重新执行。
