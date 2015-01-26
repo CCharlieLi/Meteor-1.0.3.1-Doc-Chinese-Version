@@ -6,4 +6,5 @@
  - [什么是Meteor？](Concepts/WhatisMeteor.md)
  - [结构化你的应用](Concepts/Structuringyourapp.md)
  - [数据和安全](Concepts/Dataandsecurity.md)
- - [响应](Concepts/Reactivity.md)
+ - [响应式](Concepts/Reactivity.md)
+ - [实时HTML模板](Concepts/Livehtmltemplates.md)
