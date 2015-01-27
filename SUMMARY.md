@@ -9,3 +9,5 @@
  - [响应式](Concepts/Reactivity.md)
  - [实时HTML模板](Concepts/Livehtmltemplates.md)
  - [使用包（packages）](Concepts/Usingpackages.md)
+ - [命名空间](Concepts/Namespacing.md)
+ - [部署](Concepts/Deploying.md)
