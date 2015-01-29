@@ -23,4 +23,20 @@ $ meteor deploy www.myapp.com
 
 ### 在自己的设施上运行
 
+你也可以在自己的机器上或者任何能够运行Node.js的服务器上运行自己的应用。首先运行命令：
+
+``` shell
+$ meteor build my_directory
+```
+
+这条命令会生成一个Node.js应用程序的tar包。要运行这个程序，需要提供Node.js 0.10和MongoDB服务环境。（当前版本的Meteor已经在Node 0.10.33上经过了测试）然后就可以通过调用node来运行应用程序，指定程序要监听的HTTP端口和MongoDB终端。
+
+``` shell
+$ cd my_directory
+$ (cd programs/server && npm install)
+$ PORT=3000 MONGO_URL=mongodb://localhost:27017/myapp node main.js
+```
+
+有些包可能需要设置一些其他的环境变量，例如`email`包需要`MAIL_URL`环境变量。
+
 
