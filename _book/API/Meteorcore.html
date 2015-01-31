@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
-        <title>实时HTML模板 | </title>
+        <title>Meteor核心 | </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.5.0">
@@ -19,10 +19,8 @@
         
     
     
-    <link rel="next" href="../Concepts/Usingpackages.html" />
     
-    
-    <link rel="prev" href="../Concepts/Reactivity.html" />
+    <link rel="prev" href="../MeteorAPI.html" />
     
 
         
@@ -34,7 +32,7 @@
 
 
         
-    <div class="book" data-level="1.5" data-basepath=".." data-revision="1422675715998">
+    <div class="book" data-level="2.1" data-basepath=".." data-revision="1422675715998">
     
 
 <div class="book-summary">
@@ -201,7 +199,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1.5" data-path="Concepts/Livehtmltemplates.html">
+        <li class="chapter " data-level="1.5" data-path="Concepts/Livehtmltemplates.html">
             
                 
                     <a href="../Concepts/Livehtmltemplates.html">
@@ -287,7 +285,7 @@
                 
     
         
-        <li class="chapter " data-level="2.1" data-path="API/Meteorcore.html">
+        <li class="chapter active" data-level="2.1" data-path="API/Meteorcore.html">
             
                 
                     <a href="../API/Meteorcore.html">
@@ -396,109 +394,22 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_154">
+                    <section class="normal" id="section-gitbook_162">
                     
-                        <h2 id="html">实时HTML模板</h2>
-<p>HTML模板功能是一个web应用框架的重要内容。有了Blaze——Meteor的实时页面更新技术，你可以做到“响应式”地渲染页面，也就是说，它会追踪页面数据的变化并实时更新页面。</p>
-<p>Meteor使你可以简单地将自己喜欢的模板语言与Meteor实时页面更新技术结合起来。你只需要像开发其他项目一样写出模板来，Meteor会负责实时更新模板内容。</p>
-<p>Meteor内置的模板语言是<a href="https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md" target="_blank">Spacebars</a>，是基于<a href="http://handlebarsjs.com/" target="_blank">Handlebars</a>开发，并保留了部分Handlebars的特征和语法，但是在编译时被定制用来生成响应式Meteor模板。</p>
-<blockquote>
-<p>目前，Meteor内置的模板系统只有Spacebars，但是Meteor社区已经开发出了很多支持其他模板语言的包，如<a href="https://atmospherejs.com/mquandalle/jade" target="_blank">Jade</a>。</p>
-</blockquote>
-<p>为了定义模板，在项目目录中新建一个扩展名为<code>.html</code>的文件，在文件中添加一个<code>&lt;template&gt;</code>标签并且在标签中加入<code>name</code>属性，在标签内部加入模板内容。Meteor会重新编译模板，使其能在客户端进行渲染，并且能被全局的<code>Template</code>对象调用。</p>
-<p>当应用被加载时，会自动渲染特殊模板<code>&lt;body&gt;</code>，这里使用的是<code>&lt;body&gt;</code>元素而不是<code>&lt;template&gt;</code>。要在一个模板中插入另一个模板需要使用<code>{{&gt; inclusion}}</code>。</p>
-<p>要把数据添加到模板中，最简单的方法就是在Javascript文件中定义helper函数。用<code>Template.templateName.helpers({ ... })</code>来定义helpers。结合起来就是：</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Today's weather!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-  {{&gt; forecast}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"forecast"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>It'll be {{prediction}} tonight<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in client/myapp.js: reactive helper function</span>
-Template.forecast.helpers({
-  prediction: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Session.get(<span class="hljs-string">"weather"</span>);
-  }
-});
-
-
-<span class="hljs-comment">// in the JavaScript console</span>
-&gt; Session.set(<span class="hljs-string">"weather"</span>, <span class="hljs-string">"cloudy"</span>);
-&gt; <span class="hljs-built_in">document</span>.body.innerHTML
- =&gt; <span class="hljs-string">"&lt;h1&gt;Today's weather!&lt;/h1&gt; &lt;div&gt;It'll be cloudy tonight&lt;/div&gt;"</span>
-
-&gt; Session.set(<span class="hljs-string">"weather"</span>, <span class="hljs-string">"cool and dry"</span>);
-&gt; <span class="hljs-built_in">document</span>.body.innerHTML
- =&gt; <span class="hljs-string">"&lt;h1&gt;Today's weather!&lt;/h1&gt; &lt;div&gt;It'll be cool and dry tonight&lt;/div&gt;"</span>
-</code></pre>
-<p>如果要遍历数组或是数据库，使用<code>{{#each}}</code>：</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"players"</span>&gt;</span>
-  {{#each topScorers}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in myapp.js</span>
-Template.players.helpers({
-  topScorers: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Users.find({score: {$gt: <span class="hljs-number">100</span>}}, {sort: {score: -<span class="hljs-number">1</span>}});
-  }
-});
-</code></pre>
-<p>在这个实例中，数据来自对数据库的查询操作。当数据库的指针被传递给<code>{{#each}}</code>，有新查询的数据时，它会连接所有的机制来高效地添加和移动DOM节点。</p>
-<p>Helpers可以接受参数，并且接收当前模板上下文数据在<code>this</code>中。注意有的模板块的helpers会改变当前上下文（比如<code>{{#each}}</code> 和<code>{{#with}}</code>）：</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in a JavaScript file</span>
-Template.players.helpers({
-  leagueIs: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(league)</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.league === league;
-  }
-});
-</code></pre>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in a HTML file --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"players"</span>&gt;</span>
-  {{#each topScorers}}
-    {{#if leagueIs "junior"}}
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Junior: {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    {{/if}}
-    {{#if leagueIs "senior"}}
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Senior: {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    {{/if}}
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<p>Helpers同样也可以用来传递持久性数据。</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// Works fine with {{#each sections}}</span>
-Template.report.helpers({
-  sections: [<span class="hljs-string">"Situation"</span>, <span class="hljs-string">"Complication"</span>, <span class="hljs-string">"Resolution"</span>]
-});
-</code></pre>
-<p>最后一点，你也可以通过使用<code>events</code>函数为一个模板添加事件处理。被传递到<code>events</code>函数的对象都记录在<code>Event Maps</code>中，事件处理函数中的<code>this</code>参数则是触发该事件的元素的上下文。</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"scores"</span>&gt;</span>
-  {{#each player}}
-    {{&gt; playerScore}}
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"playerScore"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{{name}}: {{score}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"give-points"</span>&gt;</span>Give points<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// myapp.js</span>
-Template.playerScore.events({
-  <span class="hljs-string">'click .give-points'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    Users.update(<span class="hljs-keyword">this</span>._id, {$inc: {score: <span class="hljs-number">2</span>}});
-  }
-});
-</code></pre>
-<p>要了解更多关于Spacebars的内容，请阅读<a href="https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md" target="_blank">the Spacebars README</a>。</p>
+                        <h2 id="meteor">Meteor核心</h2>
+<table>
+<thead>
+<tr>
+<th>Meteor.isClient</th>
+<th>Anywhere</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>布尔变量。如果在客户端环境下运行返回True。</td>
+</tr>
+</tbody>
+</table>
 
                     
                     </section>
@@ -509,10 +420,8 @@ Template.playerScore.events({
         </div>
 
         
-        <a href="../Concepts/Reactivity.html" class="navigation navigation-prev " aria-label="Previous page: 响应式"><i class="fa fa-angle-left"></i></a>
+        <a href="../MeteorAPI.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: API"><i class="fa fa-angle-left"></i></a>
         
-        
-        <a href="../Concepts/Usingpackages.html" class="navigation navigation-next " aria-label="Next page: 使用包（packages）"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

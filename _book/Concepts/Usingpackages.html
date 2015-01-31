@@ -19,6 +19,8 @@
         
     
     
+    <link rel="next" href="../Concepts/Namespacing.html" />
+    
     
     <link rel="prev" href="../Concepts/Livehtmltemplates.html" />
     
@@ -32,7 +34,7 @@
 
 
         
-    <div class="book" data-level="1.6" data-basepath=".." data-revision="1422264357520">
+    <div class="book" data-level="1.6" data-basepath=".." data-revision="1422675715998">
     
 
 <div class="book-summary">
@@ -118,9 +120,17 @@
         </li>
     
         
-        <li class="chapter " data-level="1" >
+        <li class="chapter " data-level="1" data-path="Concepts.html">
             
-            <span><b>1.</b> 基本概念</span>
+                
+                    <a href="../Concepts.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                         基本概念
+                    </a>
+                
             
             
             <ul class="articles">
@@ -222,6 +232,76 @@
             
         </li>
     
+        
+        <li class="chapter " data-level="1.7" data-path="Concepts/Namespacing.html">
+            
+                
+                    <a href="../Concepts/Namespacing.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.7.</b>
+                        
+                         命名空间
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="1.8" data-path="Concepts/Deploying.html">
+            
+                
+                    <a href="../Concepts/Deploying.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.8.</b>
+                        
+                         部署
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2" data-path="MeteorAPI.html">
+            
+                
+                    <a href="../MeteorAPI.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                         API
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="2.1" data-path="API/Meteorcore.html">
+            
+                
+                    <a href="../API/Meteorcore.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                         Meteor核心
+                    </a>
+                
+            
+            
+        </li>
+    
 
             </ul>
             
@@ -316,11 +396,15 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_78">
+                    <section class="normal" id="section-gitbook_158">
                     
                         <h2 id="packages">使用包（packages）</h2>
 <p>到目前为止，我们所接触到的所有功能都部署在Meteor的标准包中，这都归功于Meteor不同寻常的强大的同构包和构建系统。同构的意思是，这些包既能运行在浏览器，也能运行在移动端和服务器端。在包中也可以包含一些插件，来扩展构建进程，例如<code>coffeescript</code>（<a href="http://coffeescript.org/" target="_blank">CoffeeScript</a> 编译）或者<code>templating</code>（编译HTML模板）。</p>
 <p>任何人都可以发布Meteor包，目前已经有成千上万个由社区编写的Meteor包发布了。要浏览这些包，最简单的方法是访问由Percolate工作室开发的<a href="https://atmospherejs.com/" target="_blank">Atmosphere</a>。你也可以使用<code>meteor search</code>和<code>meteor show</code>命令来查看。</p>
+<p>你可以使用<code>meteor add</code>来为应用添加包或者使用<code>meteor remove</code>来移除包。此外，<code>meteor list</code>命令可以查看目前应用中在使用的包，<code>meteor update</code>命令会更新所有包到最新的版本。</p>
+<p>在初始状态下，所有的应用都包含<code>meteor-platform</code>包，它会自动安装组成Meteor核心框架的包。如果你想构建一个自定义核心栈的框架，只需要移除<code>meteor-platform</code>然后随意添加你想要的任何包。</p>
+<p>Meteor使用的是一个单一加载的包管理系统，也就是说它只会加载每个包的一个版本。在添加或升级一个特定版本的包之前，Meteor会使用一种约束机制来检查这样做是否会导致其他包崩溃。默认情况下，Meteor会使用保守的选择机制，当添加传递性依赖项（其他包所依赖的包，而不是应用本身依赖的包）时，Meteor会试图选择更早的版本。</p>
+<p>除了应用中包含的Meteor官方发布的包，<code>meteor list</code>和<code>meteor add</code>同时也会搜索应用根目录下的<code>packages</code>目录。你也可以使用<code>packages</code>目录把你的整个应用划分到一些包中，方便复用和测试将要发布的包。详细内容请看<a href="Writingpackages.html">编写包</a>部分。</p>
 
                     
                     </section>
@@ -331,8 +415,10 @@
         </div>
 
         
-        <a href="../Concepts/Livehtmltemplates.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 实时HTML模板"><i class="fa fa-angle-left"></i></a>
+        <a href="../Concepts/Livehtmltemplates.html" class="navigation navigation-prev " aria-label="Previous page: 实时HTML模板"><i class="fa fa-angle-left"></i></a>
         
+        
+        <a href="../Concepts/Namespacing.html" class="navigation navigation-next " aria-label="Next page: 命名空间"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

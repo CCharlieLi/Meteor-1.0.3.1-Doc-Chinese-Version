@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
-        <title>实时HTML模板 | </title>
+        <title>命名空间 | </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.5.0">
@@ -19,10 +19,10 @@
         
     
     
-    <link rel="next" href="../Concepts/Usingpackages.html" />
+    <link rel="next" href="../Concepts/Deploying.html" />
     
     
-    <link rel="prev" href="../Concepts/Reactivity.html" />
+    <link rel="prev" href="../Concepts/Usingpackages.html" />
     
 
         
@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-level="1.5" data-basepath=".." data-revision="1422675715998">
+    <div class="book" data-level="1.7" data-basepath=".." data-revision="1422675715998">
     
 
 <div class="book-summary">
@@ -201,7 +201,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1.5" data-path="Concepts/Livehtmltemplates.html">
+        <li class="chapter " data-level="1.5" data-path="Concepts/Livehtmltemplates.html">
             
                 
                     <a href="../Concepts/Livehtmltemplates.html">
@@ -233,7 +233,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1.7" data-path="Concepts/Namespacing.html">
+        <li class="chapter active" data-level="1.7" data-path="Concepts/Namespacing.html">
             
                 
                     <a href="../Concepts/Namespacing.html">
@@ -396,109 +396,43 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_154">
+                    <section class="normal" id="section-gitbook_155">
                     
-                        <h2 id="html">实时HTML模板</h2>
-<p>HTML模板功能是一个web应用框架的重要内容。有了Blaze——Meteor的实时页面更新技术，你可以做到“响应式”地渲染页面，也就是说，它会追踪页面数据的变化并实时更新页面。</p>
-<p>Meteor使你可以简单地将自己喜欢的模板语言与Meteor实时页面更新技术结合起来。你只需要像开发其他项目一样写出模板来，Meteor会负责实时更新模板内容。</p>
-<p>Meteor内置的模板语言是<a href="https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md" target="_blank">Spacebars</a>，是基于<a href="http://handlebarsjs.com/" target="_blank">Handlebars</a>开发，并保留了部分Handlebars的特征和语法，但是在编译时被定制用来生成响应式Meteor模板。</p>
+                        <h2 id="">命名空间</h2>
+<p>Meteor的命名空间支持使得用Javascript编写大型应用程序变得更容易。应用中所使用的每个包都在相互隔离的命名空间中，也就是说一个包只能看到自己的全局变量，或者其他包提供的用于特殊用途的包。以下将展示命名空间是如何工作的：</p>
+<p>当你声明了一个全局变量，你可以选择这个变量的使用范围在文件范围或包范围。</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// File Scope. This variable will be visible only inside this</span>
+<span class="hljs-comment">// one file. Other files in this app or package wont see it.</span>
+<span class="hljs-keyword">var</span> alicePerson = {name: <span class="hljs-string">"alice"</span>};
+
+<span class="hljs-comment">// Package Scope. This variable is visible to every file inside</span>
+<span class="hljs-comment">// of this package or app. The difference is that 'var' is</span>
+<span class="hljs-comment">// omitted.</span>
+bobPerson = {name: <span class="hljs-string">"bob"</span>};
+</code></pre>
+<p>注意这里只是采用原生的Javascript语法来区分定义全局变量和局部变量。Meteor会扫描源代码中声明的全局变量，然后生成一个包装器使得所有的全局变量都不会超出命名空间的范围。</p>
+<p>除了文件范围和包范围，还可以使用导出变量。导出变量是指当你需要在包范围以外使用包中的变量时，使其变得可用。比如，从<code>email</code>包中导出<code>Email</code>变量。如果你的应用使用了<code>email</code>包（并且必须使用<code>email</code>包！）那么就可以使用<code>Email</code>变量，并且可以调用<code>Email.send</code>。大部分的包只有一个导出变量，但是有些包可能有两个或三个导出变量（如一个包中有多个类同时在工作）。</p>
+<p>只有当前直接使用的包的导出变量是可见的。如果你正在使用包A，而包A正在使用包B，那么你只能使用包A的导出变量。包B的导出变量不会“渗透”到当前的命名空间中，因为你正在使用包A。每个命名空间都保持干净整洁。每个应用或包都只能使用自己的全局变量和所需的由其他包提供的API。</p>
+<p>当在调试应用程序时，浏览器的JavaScript命令行上下文和应用的命名空间是对应的。你只能使用当前应用的全局变量和所使用的包的导出变量，而不能使用这些包内部的变量，也不能使用传递性依赖项（不是由应用程序直接使用的包，而是其他包所依赖的包）的导出变量。</p>
+<p>如果你想使用浏览器内置调试器查看一个包的内部，你有两个可选操作：</p>
+<ul>
+<li><p>在包中的代码设置断点。当程序停在断点处时，当前命令行就已经在这个包的命名空间中。你就能查看这个包的包范围变量和导入变量，以及断点所在文件的文件范围变量。</p>
+</li>
+<li><p>假如在你的应用程序中包含了<code>foo</code>包，无论应用程序是否直接使用这个包，它的导出变量都能通过<code>Package.foo</code>来使用。例如，应用中安装了<code>email</code>这个包，你可以在其他命名空间直接使用<code>Package.email.Email.send</code>。</p>
+</li>
+</ul>
+<p>在声明一个函数时，要记住在JavaScript中<code>function x () {}</code>只是<code>var x = function x () {}</code>的简写形式。参照如下实例：</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// This is the same as 'var x = function x () ...'. So x() is</span>
+<span class="hljs-comment">// file-scope and can be called only from within this one file.</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">x</span> <span class="hljs-params">()</span> </span>{ ... }
+
+<span class="hljs-comment">// No 'var', so x() is package-scope and can be called from</span>
+<span class="hljs-comment">// any file inside this app or package.</span>
+x = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{ ... }
+</code></pre>
 <blockquote>
-<p>目前，Meteor内置的模板系统只有Spacebars，但是Meteor社区已经开发出了很多支持其他模板语言的包，如<a href="https://atmospherejs.com/mquandalle/jade" target="_blank">Jade</a>。</p>
+<p>技术上来说，应用程序中的全局变量（相对于包中的全局变量）才是真正的全局变量。这些变量不能在私有范围的应用程序代码中被捕获，否则在浏览器的命令行调试器中将看不到这些变量。也就是说应用程序的全局变量实际上对于包是可见的。如果适当地注意编写包代码，这都不会造成什么问题（应用程序全局变量也应该注意避免使用包中声明的变量名称）。其实开发者不用担心这种巧合，以后Meteor将会对这些变量名称进行检查，并在重名的时候抛出异常。</p>
 </blockquote>
-<p>为了定义模板，在项目目录中新建一个扩展名为<code>.html</code>的文件，在文件中添加一个<code>&lt;template&gt;</code>标签并且在标签中加入<code>name</code>属性，在标签内部加入模板内容。Meteor会重新编译模板，使其能在客户端进行渲染，并且能被全局的<code>Template</code>对象调用。</p>
-<p>当应用被加载时，会自动渲染特殊模板<code>&lt;body&gt;</code>，这里使用的是<code>&lt;body&gt;</code>元素而不是<code>&lt;template&gt;</code>。要在一个模板中插入另一个模板需要使用<code>{{&gt; inclusion}}</code>。</p>
-<p>要把数据添加到模板中，最简单的方法就是在Javascript文件中定义helper函数。用<code>Template.templateName.helpers({ ... })</code>来定义helpers。结合起来就是：</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Today's weather!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-  {{&gt; forecast}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"forecast"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>It'll be {{prediction}} tonight<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in client/myapp.js: reactive helper function</span>
-Template.forecast.helpers({
-  prediction: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Session.get(<span class="hljs-string">"weather"</span>);
-  }
-});
-
-
-<span class="hljs-comment">// in the JavaScript console</span>
-&gt; Session.set(<span class="hljs-string">"weather"</span>, <span class="hljs-string">"cloudy"</span>);
-&gt; <span class="hljs-built_in">document</span>.body.innerHTML
- =&gt; <span class="hljs-string">"&lt;h1&gt;Today's weather!&lt;/h1&gt; &lt;div&gt;It'll be cloudy tonight&lt;/div&gt;"</span>
-
-&gt; Session.set(<span class="hljs-string">"weather"</span>, <span class="hljs-string">"cool and dry"</span>);
-&gt; <span class="hljs-built_in">document</span>.body.innerHTML
- =&gt; <span class="hljs-string">"&lt;h1&gt;Today's weather!&lt;/h1&gt; &lt;div&gt;It'll be cool and dry tonight&lt;/div&gt;"</span>
-</code></pre>
-<p>如果要遍历数组或是数据库，使用<code>{{#each}}</code>：</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"players"</span>&gt;</span>
-  {{#each topScorers}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in myapp.js</span>
-Template.players.helpers({
-  topScorers: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Users.find({score: {$gt: <span class="hljs-number">100</span>}}, {sort: {score: -<span class="hljs-number">1</span>}});
-  }
-});
-</code></pre>
-<p>在这个实例中，数据来自对数据库的查询操作。当数据库的指针被传递给<code>{{#each}}</code>，有新查询的数据时，它会连接所有的机制来高效地添加和移动DOM节点。</p>
-<p>Helpers可以接受参数，并且接收当前模板上下文数据在<code>this</code>中。注意有的模板块的helpers会改变当前上下文（比如<code>{{#each}}</code> 和<code>{{#with}}</code>）：</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in a JavaScript file</span>
-Template.players.helpers({
-  leagueIs: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(league)</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.league === league;
-  }
-});
-</code></pre>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in a HTML file --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"players"</span>&gt;</span>
-  {{#each topScorers}}
-    {{#if leagueIs "junior"}}
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Junior: {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    {{/if}}
-    {{#if leagueIs "senior"}}
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Senior: {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    {{/if}}
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<p>Helpers同样也可以用来传递持久性数据。</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// Works fine with {{#each sections}}</span>
-Template.report.helpers({
-  sections: [<span class="hljs-string">"Situation"</span>, <span class="hljs-string">"Complication"</span>, <span class="hljs-string">"Resolution"</span>]
-});
-</code></pre>
-<p>最后一点，你也可以通过使用<code>events</code>函数为一个模板添加事件处理。被传递到<code>events</code>函数的对象都记录在<code>Event Maps</code>中，事件处理函数中的<code>this</code>参数则是触发该事件的元素的上下文。</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"scores"</span>&gt;</span>
-  {{#each player}}
-    {{&gt; playerScore}}
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"playerScore"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{{name}}: {{score}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"give-points"</span>&gt;</span>Give points<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// myapp.js</span>
-Template.playerScore.events({
-  <span class="hljs-string">'click .give-points'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    Users.update(<span class="hljs-keyword">this</span>._id, {$inc: {score: <span class="hljs-number">2</span>}});
-  }
-});
-</code></pre>
-<p>要了解更多关于Spacebars的内容，请阅读<a href="https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md" target="_blank">the Spacebars README</a>。</p>
 
                     
                     </section>
@@ -509,10 +443,10 @@ Template.playerScore.events({
         </div>
 
         
-        <a href="../Concepts/Reactivity.html" class="navigation navigation-prev " aria-label="Previous page: 响应式"><i class="fa fa-angle-left"></i></a>
+        <a href="../Concepts/Usingpackages.html" class="navigation navigation-prev " aria-label="Previous page: 使用包（packages）"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../Concepts/Usingpackages.html" class="navigation navigation-next " aria-label="Next page: 使用包（packages）"><i class="fa fa-angle-right"></i></a>
+        <a href="../Concepts/Deploying.html" class="navigation navigation-next " aria-label="Next page: 部署"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

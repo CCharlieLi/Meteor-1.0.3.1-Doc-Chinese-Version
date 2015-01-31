@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
-        <title>实时HTML模板 | </title>
+        <title>部署 | </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.5.0">
@@ -19,10 +19,10 @@
         
     
     
-    <link rel="next" href="../Concepts/Usingpackages.html" />
+    <link rel="next" href="../MeteorAPI.html" />
     
     
-    <link rel="prev" href="../Concepts/Reactivity.html" />
+    <link rel="prev" href="../Concepts/Namespacing.html" />
     
 
         
@@ -34,7 +34,7 @@
 
 
         
-    <div class="book" data-level="1.5" data-basepath=".." data-revision="1422675715998">
+    <div class="book" data-level="1.8" data-basepath=".." data-revision="1422675715998">
     
 
 <div class="book-summary">
@@ -201,7 +201,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1.5" data-path="Concepts/Livehtmltemplates.html">
+        <li class="chapter " data-level="1.5" data-path="Concepts/Livehtmltemplates.html">
             
                 
                     <a href="../Concepts/Livehtmltemplates.html">
@@ -249,7 +249,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1.8" data-path="Concepts/Deploying.html">
+        <li class="chapter active" data-level="1.8" data-path="Concepts/Deploying.html">
             
                 
                     <a href="../Concepts/Deploying.html">
@@ -396,109 +396,29 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_154">
+                    <section class="normal" id="section-gitbook_153">
                     
-                        <h2 id="html">实时HTML模板</h2>
-<p>HTML模板功能是一个web应用框架的重要内容。有了Blaze——Meteor的实时页面更新技术，你可以做到“响应式”地渲染页面，也就是说，它会追踪页面数据的变化并实时更新页面。</p>
-<p>Meteor使你可以简单地将自己喜欢的模板语言与Meteor实时页面更新技术结合起来。你只需要像开发其他项目一样写出模板来，Meteor会负责实时更新模板内容。</p>
-<p>Meteor内置的模板语言是<a href="https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md" target="_blank">Spacebars</a>，是基于<a href="http://handlebarsjs.com/" target="_blank">Handlebars</a>开发，并保留了部分Handlebars的特征和语法，但是在编译时被定制用来生成响应式Meteor模板。</p>
-<blockquote>
-<p>目前，Meteor内置的模板系统只有Spacebars，但是Meteor社区已经开发出了很多支持其他模板语言的包，如<a href="https://atmospherejs.com/mquandalle/jade" target="_blank">Jade</a>。</p>
-</blockquote>
-<p>为了定义模板，在项目目录中新建一个扩展名为<code>.html</code>的文件，在文件中添加一个<code>&lt;template&gt;</code>标签并且在标签中加入<code>name</code>属性，在标签内部加入模板内容。Meteor会重新编译模板，使其能在客户端进行渲染，并且能被全局的<code>Template</code>对象调用。</p>
-<p>当应用被加载时，会自动渲染特殊模板<code>&lt;body&gt;</code>，这里使用的是<code>&lt;body&gt;</code>元素而不是<code>&lt;template&gt;</code>。要在一个模板中插入另一个模板需要使用<code>{{&gt; inclusion}}</code>。</p>
-<p>要把数据添加到模板中，最简单的方法就是在Javascript文件中定义helper函数。用<code>Template.templateName.helpers({ ... })</code>来定义helpers。结合起来就是：</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">h1</span>&gt;</span>Today's weather!<span class="hljs-tag">&lt;/<span class="hljs-title">h1</span>&gt;</span>
-  {{&gt; forecast}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"forecast"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>It'll be {{prediction}} tonight<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
+                        <h2 id="">部署</h2>
+<p>Meteor也是一个功能全面的服务器，包含了部署应用程序所需的所有功能，而开发者只需要提供JavaScript，HTML和CSS文件。</p>
+<h3 id="meteor">在Meteor的设施上运行</h3>
+<p>部署应用程序最简单的方式就是使用<code>meteor deploy</code>。之所以提供这个功能是因为个人认为这是我们最想要的：只需要提出一个想法，在一个周末实现它，然后发布给全世界使用，整个过程毫无阻碍。</p>
+<pre><code class="lang-shell">$ meteor deploy myapp.meteor.com
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in client/myapp.js: reactive helper function</span>
-Template.forecast.helpers({
-  prediction: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Session.get(<span class="hljs-string">"weather"</span>);
-  }
-});
-
-
-<span class="hljs-comment">// in the JavaScript console</span>
-&gt; Session.set(<span class="hljs-string">"weather"</span>, <span class="hljs-string">"cloudy"</span>);
-&gt; <span class="hljs-built_in">document</span>.body.innerHTML
- =&gt; <span class="hljs-string">"&lt;h1&gt;Today's weather!&lt;/h1&gt; &lt;div&gt;It'll be cloudy tonight&lt;/div&gt;"</span>
-
-&gt; Session.set(<span class="hljs-string">"weather"</span>, <span class="hljs-string">"cool and dry"</span>);
-&gt; <span class="hljs-built_in">document</span>.body.innerHTML
- =&gt; <span class="hljs-string">"&lt;h1&gt;Today's weather!&lt;/h1&gt; &lt;div&gt;It'll be cool and dry tonight&lt;/div&gt;"</span>
+<p>现在你的应用程序可以通过myapp.meteor.com访问了。如果这是第一次部署到这个域名，Meteor会为你的应用创建一个新的空数据库。如果你想更新之前的部署，Meteor会保存现有的数据，只更新代码。</p>
+<p>你也可以将应用程序部署到自己的域名。只需要为你的域名设置一个CNAME映射到origin.meteor.com，然后部署到这个域名。</p>
+<pre><code class="lang-shell">$ meteor deploy www.myapp.com
 </code></pre>
-<p>如果要遍历数组或是数据库，使用<code>{{#each}}</code>：</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"players"</span>&gt;</span>
-  {{#each topScorers}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
+<p>我们提供的这项功能是完全免费的。这个功能可以帮助你快速实现内部beta测试，实现原型等等。要了解更多关于部署的内容，请阅读meteor deploy。</p>
+<h3 id="">在自己的设施上运行</h3>
+<p>你也可以在自己的机器上或者任何能够运行Node.js的服务器上运行自己的应用。首先运行命令：</p>
+<pre><code class="lang-shell">$ meteor build my_directory
 </code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in myapp.js</span>
-Template.players.helpers({
-  topScorers: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> Users.find({score: {$gt: <span class="hljs-number">100</span>}}, {sort: {score: -<span class="hljs-number">1</span>}});
-  }
-});
+<p>这条命令会生成一个Node.js应用程序的tar包。要运行这个程序，需要提供Node.js 0.10和MongoDB服务环境。（当前版本的Meteor已经在Node 0.10.33上经过了测试）然后就可以通过调用node来运行应用程序，指定程序要监听的HTTP端口和MongoDB终端。</p>
+<pre><code class="lang-shell">$ cd my_directory
+$ (cd programs/server &amp;&amp; npm install)
+$ PORT=3000 MONGO_URL=mongodb://localhost:27017/myapp node main.js
 </code></pre>
-<p>在这个实例中，数据来自对数据库的查询操作。当数据库的指针被传递给<code>{{#each}}</code>，有新查询的数据时，它会连接所有的机制来高效地添加和移动DOM节点。</p>
-<p>Helpers可以接受参数，并且接收当前模板上下文数据在<code>this</code>中。注意有的模板块的helpers会改变当前上下文（比如<code>{{#each}}</code> 和<code>{{#with}}</code>）：</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// in a JavaScript file</span>
-Template.players.helpers({
-  leagueIs: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(league)</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.league === league;
-  }
-});
-</code></pre>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- in a HTML file --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"players"</span>&gt;</span>
-  {{#each topScorers}}
-    {{#if leagueIs "junior"}}
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Junior: {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    {{/if}}
-    {{#if leagueIs "senior"}}
-      <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>Senior: {{name}}<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    {{/if}}
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<p>Helpers同样也可以用来传递持久性数据。</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// Works fine with {{#each sections}}</span>
-Template.report.helpers({
-  sections: [<span class="hljs-string">"Situation"</span>, <span class="hljs-string">"Complication"</span>, <span class="hljs-string">"Resolution"</span>]
-});
-</code></pre>
-<p>最后一点，你也可以通过使用<code>events</code>函数为一个模板添加事件处理。被传递到<code>events</code>函数的对象都记录在<code>Event Maps</code>中，事件处理函数中的<code>this</code>参数则是触发该事件的元素的上下文。</p>
-<pre><code class="lang-html"><span class="hljs-comment">&lt;!-- myapp.html --&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"scores"</span>&gt;</span>
-  {{#each player}}
-    {{&gt; playerScore}}
-  {{/each}}
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-
-<span class="hljs-tag">&lt;<span class="hljs-title">template</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"playerScore"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>{{name}}: {{score}}
-    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"give-points"</span>&gt;</span>Give points<span class="hljs-tag">&lt;/<span class="hljs-title">span</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">template</span>&gt;</span>
-</code></pre>
-<pre><code class="lang-javascript"><span class="hljs-comment">// myapp.js</span>
-Template.playerScore.events({
-  <span class="hljs-string">'click .give-points'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-    Users.update(<span class="hljs-keyword">this</span>._id, {$inc: {score: <span class="hljs-number">2</span>}});
-  }
-});
-</code></pre>
-<p>要了解更多关于Spacebars的内容，请阅读<a href="https://github.com/meteor/meteor/blob/devel/packages/spacebars/README.md" target="_blank">the Spacebars README</a>。</p>
+<p>有些包可能需要设置一些其他的环境变量，例如<code>email</code>包需要<code>MAIL_URL</code>环境变量。</p>
 
                     
                     </section>
@@ -509,10 +429,10 @@ Template.playerScore.events({
         </div>
 
         
-        <a href="../Concepts/Reactivity.html" class="navigation navigation-prev " aria-label="Previous page: 响应式"><i class="fa fa-angle-left"></i></a>
+        <a href="../Concepts/Namespacing.html" class="navigation navigation-prev " aria-label="Previous page: 命名空间"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../Concepts/Usingpackages.html" class="navigation navigation-next " aria-label="Next page: 使用包（packages）"><i class="fa fa-angle-right"></i></a>
+        <a href="../MeteorAPI.html" class="navigation navigation-next " aria-label="Next page: API"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
